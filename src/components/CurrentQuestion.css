@@ -1,0 +1,12 @@
+.question-card{
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+}
+
+.options{
+  display: flex;
+  flex-direction: column;
+  align-items: first baseline;
+  gap: 10pz;
+}

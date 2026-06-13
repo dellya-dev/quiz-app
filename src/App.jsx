@@ -4,6 +4,7 @@ import CurrentQuestion from './components/CurrentQuestion'
 
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [score, setScore] = useState(0)
 
   const questions = [
     {
@@ -41,7 +42,11 @@ function App() {
     const activeQuestion = questions[currentIndex]
     console.log(activeQuestion)
 
-    
+    function handleAnswer(option) {
+      if (activeQuestion.answer === option) {
+        setScore(score + 1)
+      }
+    }
 
   return (
     <>
@@ -49,6 +54,8 @@ function App() {
       <CurrentQuestion
           activeQuestion={activeQuestion.question}
           activeOptions={activeQuestion.options}
+          score={score}
+          handleAnswer={handleAnswer}
       />
     </>
   )
