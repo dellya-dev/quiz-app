@@ -5,6 +5,7 @@ import CurrentQuestion from './components/CurrentQuestion'
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [score, setScore] = useState(0)
+  const [selectedOption, setSelectedOption] = useState(null)
 
   const questions = [
     {
@@ -38,24 +39,27 @@ function App() {
       answer: "Jin"
     }
   ]
-  
-    const activeQuestion = questions[currentIndex]
-    console.log(activeQuestion)
 
-    function handleAnswer(option) {
-      if (activeQuestion.answer === option) {
-        setScore(score + 1)
-      }
+  const activeQuestion = questions[currentIndex]
+
+  function handleAnswer(option) {
+    setSelectedOption(option);
+
+    if (activeQuestion.answer === option) {
+      setScore(score + 1)
     }
+  }
 
   return (
     <>
       <h1>Quiz</h1>
       <CurrentQuestion
-          activeQuestion={activeQuestion.question}
-          activeOptions={activeQuestion.options}
-          score={score}
-          handleAnswer={handleAnswer}
+        activeQuestion={activeQuestion.question}
+        activeAnswer={activeQuestion.answer}
+        activeOptions={activeQuestion.options}
+        score={score}
+        handleAnswer={handleAnswer}
+        selectedOption={selectedOption}
       />
     </>
   )
