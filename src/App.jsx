@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import './App.css'
 import CurrentQuestion from './components/CurrentQuestion'
+import FinalScore from './components/FinalScore'
 
 function App() {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [score, setScore] = useState(0)
   const [selectedOption, setSelectedOption] = useState(null)
+  const [finished, setFinished] = useState(false)
 
   const questions = [
     {
@@ -50,17 +52,51 @@ function App() {
     }
   }
 
+  function handleNextQuestion() {
+    const isLastQuestion = currentIndex === questions.length - 1
+
+    if (isLastQuestion === false) {
+      setCurrentIndex(currentIndex + 1)
+      setSelectedOption (null)
+    } else {
+      setFinished(true)
+    }
+  }
+
+  function handleReplay() {
+    setCurrentIndex(0)
+    setScore(0)
+    setFinished(false)
+    setSelectedOption(null)
+  }
+
+  const amountQuestion = currentIndex + 1
+
+  const persentaseScore = (score / questions.length) * 100
+
   return (
     <>
-      <h1>Quiz</h1>
-      <CurrentQuestion
-        activeQuestion={activeQuestion.question}
-        activeAnswer={activeQuestion.answer}
-        activeOptions={activeQuestion.options}
-        score={score}
-        handleAnswer={handleAnswer}
-        selectedOption={selectedOption}
-      />
+      <h1>Quis</h1>
+      {finished
+        ? <FinalScore 
+            score={score}
+            questions={questions}
+            handleReplay={ handleReplay}
+            amountQuestion={amountQuestion}
+            persentaseScore={persentaseScore}
+          /> 
+        : <CurrentQuestion 
+            activeQuestion={activeQuestion.question}
+            activeAnswer={activeQuestion.answer}
+            activeOptions={activeQuestion.options}
+            score={score}
+            handleAnswer={handleAnswer}
+            selectedOption={selectedOption}
+            nextQuestion={handleNextQuestion}
+            questions={questions}
+            amountQuestion={amountQuestion}
+          />}
+     
     </>
   )
 }
